@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import MissingPage from "./components/MissingPage";
+import Layout from "./components/Layout";
+import UserProfile from "./pages/UserProfile";
+import AdminPage from "./pages/AdminPage";
+import RequireAuth from "./components/RequireAuth";
+import Notes from "./pages/Note/Notes";
 
-function App() {
+import axios from "axios";
+import useAuth from "./hooks/useAuth";
+
+const App = () => {
+  const {
+    auth: { accessToken },
+  } = useAuth();
+
+  axios.defaults.headers.common = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* PROTECTED ROUTES ---- ONLY FOR AUTHENTICATED USERS */}
+        <Route element={<RequireAuth />}>
+          <Route path="/profile" element={<UserProfile />} />
+
+          <Route path="/admin" element={<AdminPage />} />
+
+          <Route path="/notes" element={<Notes />} />
+        </Route>
+
+        <Route path="*" element={<MissingPage />} />
+      </Route>
+    </Routes>
   );
-}
+};
 
 export default App;
