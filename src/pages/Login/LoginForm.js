@@ -4,6 +4,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   IconButton,
   InputAdornment,
   Stack,
@@ -83,13 +84,14 @@ const LoginForm = ({ onChange, onSubmit }) => {
               />
             </Stack>
           </CardContent>
+
           <CardActions sx={{ justifyContent: "space-between" }}>
             <Button
               sx={{
                 width: 200,
                 bgcolor: "#2a2d64",
                 borderRadius: 2,
-                mt: 3
+                mt: 3,
               }}
               onClick={onSubmit}
               variant="contained"
@@ -117,6 +119,15 @@ const LoginForm = ({ onChange, onSubmit }) => {
             </Stack>
           </CardActions>
         </form>
+        <Divider sx={{ mb: 2}}/>
+        <Typography
+          sx={{ textDecoration: "none", mx: 18 }}
+          variant="h9"
+          to={"/password-reset"}
+          component={Link}
+        >
+          Forgot your password?
+        </Typography>
       </Card>
     </>
   );
