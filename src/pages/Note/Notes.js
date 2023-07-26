@@ -16,7 +16,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = `http://localhost:7000/api`;
 
-const Notes = () => {
+const Notes = ({ setNotify, setInfo, setError }) => {
   const [notes, setNotes] = useState([]);
   const [noteForm, setNoteForm] = useState("");
   const [isDrafted, setIsDrafted] = useState(false);
@@ -43,7 +43,11 @@ const Notes = () => {
       setNotes(notes);
       localStorage.setItem("notes", JSON.stringify(notes));
     } catch (error) {
-      console.log(error);
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
+      else {
+        setError({ show: true, text: error.message });
+      }
     }
   };
 
@@ -53,7 +57,7 @@ const Notes = () => {
     const noteObj = { text: noteForm, user_id: user._id };
     try {
       const {
-        data: { newNote },
+        data: { newNote, message },
         status,
       } = await axios.post(`notes`, noteObj);
       if (status !== 200) return;
@@ -63,22 +67,30 @@ const Notes = () => {
       setNotes(newNotes);
       localStorage.setItem("notes", JSON.stringify(newNotes));
       setNoteForm("");
+      setNotify({ show: true, text: message });
       setShowForm(false);
       setIsDrafted(false);
     } catch (error) {
-      console.log(error);
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
+      else {
+        setError({ show: true, text: error.message });
+      }
     }
   };
 
   const deleteDraft = () => {
     localStorage.removeItem("drafted_note");
     setNoteForm("");
+    setInfo({ show: true, text: `Draft deleted` });
     setIsDrafted(false);
   };
 
   return (
     <Box m={2} p={2}>
-      <Typography my={2} variant="h3">Notes</Typography>
+      <Typography my={2} variant="h3">
+        Notes
+      </Typography>
       <Box>
         <Stack
           direction="row"

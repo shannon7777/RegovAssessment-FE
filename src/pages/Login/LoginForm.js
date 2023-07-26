@@ -123,7 +123,7 @@ const LoginForm = ({ onChange, onSubmit }) => {
         <Typography
           sx={{ textDecoration: "none", mx: 18 }}
           variant="h9"
-          to={"/password-reset"}
+          to={"/password"}
           component={Link}
         >
           Forgot your password?

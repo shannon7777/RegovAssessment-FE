@@ -49,7 +49,7 @@ const Navbar = ({ setNotify }) => {
   const logout = useLogout();
   const signout = async () => {
     await logout();
-    setNotify({ text: "You have signed out" });
+    setNotify({ show: true, text: "You have signed out" });
   };
 
   return (

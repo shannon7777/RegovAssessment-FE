@@ -23,7 +23,7 @@ const Login = ({ setNotify, setError }) => {
     e.preventDefault();
     const { email, password } = formData;
     if (!email || !password) {
-      setError({ text: `Please type in your email or password!` });
+      setError({ show: true, text: `Please type in your email or password!` });
       return;
     }
     try {
@@ -35,13 +35,12 @@ const Login = ({ setNotify, setError }) => {
       localStorage.setItem("accessToken", JSON.stringify(accessToken));
       navigate(from, { replace: true });
       setFormData({ email: "", password: "" });
-      setNotify({ text: message });
+      setNotify({ show: true, text: message });
     } catch (error) {
-      //   if (error.response) setError({ text: error.response.data.message });
-      //   else {
-      //     setError({ text: error.message });
-      //   }
-      console.log(error);
+      if (error.response) setError({show: true, text: error.response.data.message });
+      else {
+        setError({show: true, text: error.message });
+      }
     }
   };
 

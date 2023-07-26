@@ -2,11 +2,14 @@ import { Outlet } from "react-router-dom";
 import { Container } from "@mui/material";
 import Navbar from "./Navbar";
 
-const Layout = () => {
+const Layout = ({ notificationMsg, errorMsg, infoMsg, setNotify }) => {
   return (
     <div className="app">
       <main className="content">
-        <Navbar />
+        <Navbar setNotify={setNotify} />
+        {notificationMsg}
+        {errorMsg}
+        {infoMsg}
         <Container maxWidth="xl">
           <Outlet />
         </Container>
