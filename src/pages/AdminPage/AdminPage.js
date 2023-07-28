@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosApi from "../../lib/axios";
+import useAuth from "../../hooks/useAuth";
+
 import {
   Box,
   Divider,
@@ -14,16 +16,11 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-import useAuth from "../../hooks/useAuth";
 import { AdminPanelSettings, Note, Person } from "@mui/icons-material";
 import UserNotes from "./UserNotes";
 
-axios.defaults.baseURL = `http://localhost:7000/api`;
-
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
-  const [notes, setNotes] = useState([]);
 
   const {
     auth: { user },
@@ -38,7 +35,7 @@ const AdminPage = () => {
       const {
         data: { users },
         status,
-      } = await axios(`users`);
+      } = await axiosApi(`users`);
       if (status !== 200) return;
       setUsers(users);
     } catch (error) {

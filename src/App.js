@@ -13,21 +13,22 @@ import Notes from "./pages/Note/Notes";
 import ResetPassword from "./pages/Login/ResetPassword";
 import CustomAlert from "./components/CustomAlert";
 
-import axios from "axios";
+import axiosApi from "./lib/axios";
 import useAuth from "./hooks/useAuth";
+import axios from "axios";
 
 const App = () => {
   const {
     auth: { accessToken },
   } = useAuth();
 
+  axios.defaults.baseURL = `http://localhost:7000/api`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+  // declaring states for notification alerts to be passed down
   const [notify, setNotify] = useState({ show: false, text: "" });
   const [error, setError] = useState({ show: false, text: "" });
   const [info, setInfo] = useState({ show: false, text: "" });
-
-  axios.defaults.headers.common = {
-    Authorization: `Bearer ${accessToken}`,
-  };
 
   const notificationMsg = (
     <CustomAlert

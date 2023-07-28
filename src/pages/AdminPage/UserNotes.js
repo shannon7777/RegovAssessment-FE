@@ -3,8 +3,6 @@ import { Note } from "@mui/icons-material";
 import axios from "axios";
 import {
   Button,
-  Card,
-  CardContent,
   Dialog,
   DialogActions,
   DialogContent,

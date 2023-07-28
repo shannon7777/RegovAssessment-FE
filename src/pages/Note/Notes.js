@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import axiosApi from "../../lib/axios";
+// import axiosApi from "../../lib/axios";
+import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import NoteForm from "./NoteForm";
+
 import {
   Box,
   Button,
@@ -11,10 +14,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete, NoteAdd, Save } from "@mui/icons-material";
-import NoteForm from "./NoteForm";
-import axios from "axios";
-
-axios.defaults.baseURL = `http://localhost:7000/api`;
 
 const Notes = ({ setNotify, setInfo, setError }) => {
   const [notes, setNotes] = useState([]);

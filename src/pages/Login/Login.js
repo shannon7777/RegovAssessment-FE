@@ -23,7 +23,7 @@ const Login = ({ setNotify, setError }) => {
     e.preventDefault();
     const { email, password } = formData;
     if (!email || !password) {
-      setError({ show: true, text: `Please type in your email or password!` });
+      setError({ show: true, text: `Please fill both email and password fields!` });
       return;
     }
     try {
