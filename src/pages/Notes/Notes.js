@@ -133,6 +133,7 @@ const Notes = ({ setNotify, setInfo, setError }) => {
               setShowForm,
               createNote,
               setIsDrafted,
+              setNotify
             }}
           />
         )}
@@ -145,7 +146,7 @@ const Notes = ({ setNotify, setInfo, setError }) => {
           >
             <CardContent>
               <Typography variant="h6">{note.text}</Typography>
-              <Typography variant="h7" sx={{ color: "lightgrey" }}>
+              <Typography variant="h7" sx={{ color: "grey" }}>
                 {new Date(note.createdAt).toDateString()}
               </Typography>
             </CardContent>

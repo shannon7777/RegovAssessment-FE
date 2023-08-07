@@ -15,17 +15,25 @@ const NoteForm = ({
   setShowForm,
   createNote,
   setIsDrafted,
+  setNotify,
 }) => {
+  const draftNote = () => {
+    if (!noteForm) return;
+    localStorage.setItem("drafted_note", JSON.stringify(noteForm));
+    setIsDrafted(true);
+    setNotify({ show: true, text: `Your note has been drafted` });
+  };
+
   useEffect(() => {
     if (!showForm) return;
-    const draftNote = () => {
-      console.log(`saved in local storage`);
-      localStorage.setItem("drafted_note", JSON.stringify(noteForm));
-      setIsDrafted(true);
-    };
+    // const draftNote = () => {
+    //   console.log(`saved in local storage`);
+    //   localStorage.setItem("drafted_note", JSON.stringify(noteForm));
+    //   setIsDrafted(true);
+    // };
 
-    const interval = setInterval(draftNote, 1000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(draftNote, 1000);
+    // return () => clearInterval(interval);
   }, [noteForm]);
 
   useEffect(() => {
@@ -37,7 +45,15 @@ const NoteForm = ({
   }, []);
 
   return (
-    <Dialog open={showForm} onClose={() => setShowForm(false)}>
+    <Dialog
+      open={showForm}
+      onClose={(e, reason) => {
+        if (reason === "backdropClick" || reason === "escapeKeyDown") {
+          draftNote();
+        }
+        setShowForm(false);
+      }}
+    >
       <Typography m={3} mb={0} variant="h4">
         Create Note
       </Typography>
@@ -62,7 +78,12 @@ const NoteForm = ({
         <Button
           variant="contained"
           color="error"
-          onClick={() => setShowForm(false)}
+          onClick={() => {
+            if (noteForm) {
+              draftNote();
+            }
+            setShowForm(false);
+          }}
           sx={{ bgcolor: "#db4f4a" }}
         >
           Cancel

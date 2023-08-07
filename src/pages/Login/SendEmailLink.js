@@ -12,24 +12,25 @@ import {
 } from "@mui/material";
 import { Lock, LockOpen, Login } from "@mui/icons-material";
 
-const SendEmailLink = () => {
+const SendEmailLink = ({ setError, setNotify, setInfo }) => {
   const [email, setEmail] = useState("");
 
   const onSubmitEmail = async () => {
-    if (!email) return;
+    if (!email)
+      return setError({ show: true, text: `Please type in your email` });
     try {
       const {
         status,
         data: { message },
       } = await axiosApi.post("/auth/reset", { email });
       if (status !== 200) return;
+      setInfo({ show: true, text: message });
       console.log(status, message);
     } catch (error) {
-      //   if (error.response) setError({ text: error.response.data.message });
-      if (error.response) console.log(error.response.data.message);
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
       else {
-        // setError({ text: error.message });
-        console.log(error.message);
+        setError({ show: true, text: error.message });
       }
     }
   };

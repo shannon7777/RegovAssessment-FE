@@ -9,11 +9,10 @@ import Layout from "./components/Layout";
 import UserProfile from "./pages/UserProfile";
 import AdminPage from "./pages/AdminPage";
 import RequireAuth from "./components/RequireAuth";
-import Notes from "./pages/Note/Notes";
+import Notes from "./pages/Notes";
 import ResetPassword from "./pages/Login/ResetPassword";
 import CustomAlert from "./components/CustomAlert";
 
-import axiosApi from "./lib/axios";
 import useAuth from "./hooks/useAuth";
 import axios from "axios";
 

@@ -30,6 +30,7 @@ const ResetPassword = ({ setNotify, setError }) => {
     if (!token) return;
     verifyToken();
   }, []);
+
   const verifyToken = async () => {
     try {
       const {
@@ -42,9 +43,10 @@ const ResetPassword = ({ setNotify, setError }) => {
       setEmail(email);
       setVerified(true);
     } catch (error) {
-      if (error.response) setError({ text: error.response.data.message });
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
       else {
-        setError({ text: error.message });
+        setError({ show: true, text: error.message });
       }
     }
   };
@@ -52,7 +54,10 @@ const ResetPassword = ({ setNotify, setError }) => {
   const resetPassword = async () => {
     const { password, retypePassword } = formData;
     if (password !== retypePassword)
-      return console.log(`Passwords do not match`);
+      return setError({
+        show: true,
+        text: `Passwords do not match, please ensure they match`,
+      });
 
     try {
       const {
@@ -64,11 +69,12 @@ const ResetPassword = ({ setNotify, setError }) => {
       if (status !== 200) return;
       navigate("/login");
       console.log(message);
-      setNotify({ text: message });
+      setNotify({ show: true, text: message });
     } catch (error) {
-      if (error.response) setError({ text: error.response.data.message });
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
       else {
-        setError({ text: error.message });
+        setError({ show: true, text: error.message });
       }
     }
   };

@@ -23,15 +23,15 @@ const Register = ({ setError, setNotify, setInfo }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("register button");
     try {
       if (!email || !firstName || !lastName || !password || !passwordRetype) {
-        setInfo({ text: "Please fill in all the fields" });
+        setInfo({ show: true, text: "Please fill in all the fields" });
         return;
       }
 
       if (password !== passwordRetype) {
         setError({
+          show: true,
           text: "Please make sure both password fields match!",
         });
         return;
@@ -41,13 +41,13 @@ const Register = ({ setError, setNotify, setInfo }) => {
         data: { message },
       } = await axiosApi.post(`users`, formData);
       navigate("/login");
-      setNotify({ text: message });
+      setNotify({ show: true, text: message });
     } catch (error) {
-      // if (error.response) setError({ text: error.response.data.message });
-      // else {
-      //   setError({ text: error.message });
-      // }
-      console.log(error);
+      if (error.response)
+        setError({ show: true, text: error.response.data.message });
+      else {
+        setError({ show: true, text: error.message });
+      }
     }
   };
 
