@@ -78,6 +78,13 @@ const Notes = ({ setNotify, setInfo, setError }) => {
     }
   };
 
+  const draftNote = () => {
+    if (!noteForm) return;
+    localStorage.setItem("drafted_note", JSON.stringify(noteForm));
+    setIsDrafted(true);
+    setNotify({ show: true, text: `Your note has been drafted` });
+  };
+
   const deleteDraft = () => {
     localStorage.removeItem("drafted_note");
     setNoteForm("");
@@ -133,7 +140,8 @@ const Notes = ({ setNotify, setInfo, setError }) => {
               setShowForm,
               createNote,
               setIsDrafted,
-              setNotify
+              setNotify,
+              draftNote,
             }}
           />
         )}

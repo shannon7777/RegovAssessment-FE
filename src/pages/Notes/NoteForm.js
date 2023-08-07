@@ -15,26 +15,19 @@ const NoteForm = ({
   setShowForm,
   createNote,
   setIsDrafted,
-  setNotify,
+  draftNote,
 }) => {
-  const draftNote = () => {
-    if (!noteForm) return;
-    localStorage.setItem("drafted_note", JSON.stringify(noteForm));
-    setIsDrafted(true);
-    setNotify({ show: true, text: `Your note has been drafted` });
-  };
+  // useEffect(() => {
+  //   if (!showForm) return;
+  //   const draftNote = () => {
+  //     console.log(`saved in local storage`);
+  //     localStorage.setItem("drafted_note", JSON.stringify(noteForm));
+  //     setIsDrafted(true);
+  //   };
 
-  useEffect(() => {
-    if (!showForm) return;
-    // const draftNote = () => {
-    //   console.log(`saved in local storage`);
-    //   localStorage.setItem("drafted_note", JSON.stringify(noteForm));
-    //   setIsDrafted(true);
-    // };
-
-    // const interval = setInterval(draftNote, 1000);
-    // return () => clearInterval(interval);
-  }, [noteForm]);
+  //   const interval = setInterval(draftNote, 1000);
+  //   return () => clearInterval(interval);
+  // }, [noteForm]);
 
   useEffect(() => {
     const draftedNote = JSON.parse(localStorage.getItem("drafted_note"));
